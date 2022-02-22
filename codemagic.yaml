@@ -32,6 +32,14 @@ workflows:
       - flutter analyze
       - flutter test
       - flutter build appbundle --debug
+      - |
+        # generate universal apk signed with debug key
+        android-app-bundle build-universal-apk \
+          --bundle build/**/outputs/**/*.aab \
+          --ks ~/.android/debug.keystore \
+          --ks-pass android \
+          --ks-key-alias androiddebugkey \
+          --key-pass android
     artifacts:
       - build/**/outputs/apk/**/*.apk
       - build/**/outputs/bundle/**/*.aab
