@@ -29,15 +29,9 @@ workflows:
       - flutter packages pub get
       - flutter pub run build_runner build --delete-conflicting-outputs
       - flutter format .
-      - flutter build appbundle --debug
-      - |
-        # generate universal apk signed with debug key
-        android-app-bundle build-universal-apk \
-          --bundle build/**/outputs/**/*.aab \
-          --ks ~/.android/debug.keystore \
-          --ks-pass android \
-          --ks-key-alias androiddebugkey \
-          --key-pass android
+      - flutter analyze
+      - flutter test
+      - flutter build apk --debug
     artifacts:
       - build/**/outputs/apk/**/*.apk
       - build/**/outputs/bundle/**/*.aab
