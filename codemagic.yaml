@@ -25,8 +25,13 @@ workflows:
       - |
         # set up local properties
         echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
+      - flutter clean
       - flutter packages pub get
-      - flutter build appbundle --release
+      - flutter pub run build_runner build --delete-conflicting-outputs
+      - flutter format .
+      - flutter analyze
+      - flutter test
+      - flutter build appbundle --debug
     artifacts:
       - build/**/outputs/apk/**/*.apk
       - build/**/outputs/bundle/**/*.aab
